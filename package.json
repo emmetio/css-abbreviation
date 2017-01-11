@@ -1,0 +1,20 @@
+{
+  "name": "css-transform",
+  "version": "1.0.0",
+  "description": "Prepares Emmet abbreviation for CSS output",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emmetio/css-transform.git"
+  },
+  "keywords": [],
+  "author": "Sergey Chikuyonok <serge.che@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/emmetio/css-transform/issues"
+  },
+  "homepage": "https://github.com/emmetio/css-transform#readme"
+}
