@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/emmetio/css-transform/issues"
   },
-  "homepage": "https://github.com/emmetio/css-transform#readme"
+  "homepage": "https://github.com/emmetio/css-transform#readme",
+  "dependencies": {
+    "@emmetio/stream-reader": "^1.0.0"
+  }
 }

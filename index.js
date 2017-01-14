@@ -1,5 +1,7 @@
 'use strict';
 
+import StreamReader from '@emmetio/stream-reader';
+
 const HASH   = 35; // #
 const DOLLAR = 36; // $
 const DASH   = 45; // -
@@ -34,20 +36,56 @@ function resolve(node) {
  * @return {Object}
  */
 function split(name) {
-    let i = 0, code;
-    while (i < name.length) {
-        code = name.charCodeAt(i);
-        if (isNumeric(code) || code === HASH || code === DOLLAR
-            || (code === DASH && isNumeric(name.charCodeAt(i + 1))) ) {
-            return {
-                name: name.slice(0, i),
-                value: name.slice(i)
-            }
-        }
-        i++;
-    }
+    const parts = [];
+    const stream = new StreamReader(name);
 
     return null;
+}
+
+/**
+ * Consumes a single CSS abbreviation word from given string and returns it
+ * @param  {StreamReader} stream
+ * @return {String}
+ */
+function consumeWord(stream) {
+    stream.start = stream.pos;
+	while (!stream.eol()) {
+		if (stream.eat(DASH)) {
+			// a dash '-' could be a word separator or negative sign for numbers
+			if (isNumeric(stream.peekCode())) {
+
+			}
+		}
+	}
+}
+
+/**
+ * Consumes number from given string at current stream position
+ * @param  {StreamReader} stream
+ * @return {Boolean} Returns `true` if number was consumed
+ */
+function consumeNumber(stream) {
+	const start = stream.pos;
+	let hadDot = false, code;
+	while (!stream.eol()) {
+		code = stream.peekCode();
+		if ((code === DOT && hadDot) || !isNumeric(code)) {
+			break;
+		}
+
+
+		if (code === DOT) {
+			if (hadDot) {
+				break;
+			}
+			hadDot = true;
+			stream.pos++;
+		}
+		isNumeric()
+
+
+
+	}
 }
 
 /**
@@ -56,5 +94,5 @@ function split(name) {
  * @return {Boolean}
  */
 function isNumeric(code) {
-    return code === DOT || (code > 47 && code < 58);
+    return code && (code > 47 && code < 58);
 }
