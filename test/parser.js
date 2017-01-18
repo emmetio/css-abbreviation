@@ -16,18 +16,26 @@ describe('CSS Abbreviation parser', () => {
         assert.equal(parse('p-10-20'), 'p: -10 20;');
         assert.equal(parse('p-10--20'), 'p: -10 -20;');
         assert.equal(parse('p-10-20--30'), 'p: -10 20 -30;');
-        assert.equal(parse('p-10p-20--30'), 'p: -10p -20 -30;')
-        assert.equal(parse('p-10%-20--30'), 'p: -10% -20 -30;')
+        assert.equal(parse('p-10p-20--30'), 'p: -10p -20 -30;');
+        assert.equal(parse('p-10%-20--30'), 'p: -10% -20 -30;');
+
+        assert.equal(parse('p.5'), 'p: 0.5;');
+        assert.equal(parse('p-.5'), 'p: -0.5;');
+        assert.equal(parse('p.1.2.3'), 'p: 0.1 0.2 0.3;');
+        assert.equal(parse('p.1-.2.3'), 'p: 0.1 0.2 0.3;');
+        assert.equal(parse('p.1--.2.3'), 'p: 0.1 -0.2 0.3;');
     });
 
     it('parse color', () => {
         assert.equal(parse('c#'), 'c: #000000;');
         assert.equal(parse('c#1'), 'c: #111111;');
         assert.equal(parse('c#f'), 'c: #ffffff;');
+        assert.equal(parse('c#a#b#c'), 'c: #aaaaaa #bbbbbb #cccccc;');
         assert.equal(parse('c#af'), 'c: #afafaf;');
         assert.equal(parse('c#fc0'), 'c: #ffcc00;');
         assert.equal(parse('c#11.5'), 'c: rgba(17, 17, 17, 0.5);');
         assert.equal(parse('c#.99'), 'c: rgba(0, 0, 0, 0.99);');
+        assert.equal(parse('c#t'), 'c: transparent;');
     });
 
     it('parse keywords', () => {
@@ -39,6 +47,7 @@ describe('CSS Abbreviation parser', () => {
 
     it('parse mixed', () => {
         assert.equal(parse('bd1-s#fc0'), 'bd: 1 s #ffcc00;');
+        assert.equal(parse('bd#fc0-1'), 'bd: #ffcc00 1;');
         assert.equal(parse('p0+m0'), 'p: 0;m: 0;')
     });
 });
