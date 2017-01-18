@@ -5,8 +5,24 @@ require('babel-register');
 const parser = require('../lib/parser').default;
 
 describe('CSS Abbreviation parser', () => {
-    const stringify = tree =>
-        tree.children.map(node => `${node.name}: ${node.value};`).join('');
+    function stringify(tree) {
+        return tree.children
+        .map(node => {
+            let prop = node.name;
+
+            if (node.attributes.length) {
+                prop += `(${node.attributes.map(attr => `${attr.name} => ${attr.value}`).join(', ')})`;
+            }
+
+            if (node.value.size) {
+                prop += `: ${node.value}`;
+            }
+
+            return `${prop};`;
+        })
+        .join('');
+    }
+
     const parse = abbr => stringify(parser(abbr));
 
     it('parse numeric units', () => {
@@ -43,6 +59,11 @@ describe('CSS Abbreviation parser', () => {
         assert.equal(parse('m-abc'), 'm: abc;');
         assert.equal(parse('m-a0'), 'm: a 0;');
         assert.equal(parse('m-a0-a'), 'm: a 0 a;');
+    });
+
+    it('parse arguments', () => {
+        assert.equal(parse('lg(top, red, blue 10%)'), 'lg(0 => top, 1 => red, 2 => blue 10%);');
+        assert.equal(parse('lg(top, "red, black", rgb(0, 0, 0) 10%)'), 'lg(0 => top, 1 => "red, black", 2 => rgb(0, 0, 0) 10%);');
     });
 
     it('parse mixed', () => {
