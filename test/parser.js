@@ -25,7 +25,7 @@ describe('CSS Abbreviation parser', () => {
 
     const parse = abbr => stringify(parser(abbr));
 
-    it('parse numeric units', () => {
+    it('numeric units', () => {
         assert.equal(parse('p10'), 'p: 10;');
         assert.equal(parse('p-10'), 'p: -10;');
         assert.equal(parse('p-10-'), 'p: -10;');
@@ -42,7 +42,7 @@ describe('CSS Abbreviation parser', () => {
         assert.equal(parse('p.1--.2.3'), 'p: 0.1 -0.2 0.3;');
     });
 
-    it('parse color', () => {
+    it('color', () => {
         assert.equal(parse('c#'), 'c: #000000;');
         assert.equal(parse('c#1'), 'c: #111111;');
         assert.equal(parse('c#f'), 'c: #ffffff;');
@@ -54,21 +54,27 @@ describe('CSS Abbreviation parser', () => {
         assert.equal(parse('c#t'), 'c: transparent;');
     });
 
-    it('parse keywords', () => {
+    it('keywords', () => {
         assert.equal(parse('m-a'), 'm: a;');
         assert.equal(parse('m-abc'), 'm: abc;');
         assert.equal(parse('m-a0'), 'm: a 0;');
         assert.equal(parse('m-a0-a'), 'm: a 0 a;');
     });
 
-    it('parse arguments', () => {
+    it('arguments', () => {
         assert.equal(parse('lg(top, red, blue 10%)'), 'lg(0 => top, 1 => red, 2 => blue 10%);');
         assert.equal(parse('lg(top, "red, black", rgb(0, 0, 0) 10%)'), 'lg(0 => top, 1 => "red, black", 2 => rgb(0, 0, 0) 10%);');
     });
 
-    it('parse mixed', () => {
+    it('important/exclamation', () => {
+        assert.equal(parse('!'), '!;');
+        assert.equal(parse('p10!'), 'p: 10 !;');
+    });
+
+    it('mixed', () => {
         assert.equal(parse('bd1-s#fc0'), 'bd: 1 s #ffcc00;');
         assert.equal(parse('bd#fc0-1'), 'bd: #ffcc00 1;');
         assert.equal(parse('p0+m0'), 'p: 0;m: 0;')
+        assert.equal(parse('p0!+m0!'), 'p: 0 !;m: 0 !;')
     });
 });
