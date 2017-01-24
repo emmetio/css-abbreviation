@@ -1,6 +1,6 @@
 {
   "name": "@emmetio/css-abbreviation",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Prepares Emmet abbreviation for CSS output",
   "main": "dist/css-snippets-resolver.cjs.js",
   "module": "dist/css-snippets-resolver.es.js",
