@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 require('babel-register');
-const parser = require('../lib/parser').default;
+const parser = require('../index').default;
 
 describe('CSS Abbreviation parser', () => {
     function stringify(tree) {

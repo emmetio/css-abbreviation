@@ -1,10 +1,13 @@
 {
-  "name": "css-transform",
-  "version": "1.0.0",
+  "name": "@emmetio/css-abbreviation",
+  "version": "0.0.1",
   "description": "Prepares Emmet abbreviation for CSS output",
-  "main": "index.js",
+  "main": "dist/css-snippets-resolver.cjs.js",
+  "module": "dist/css-snippets-resolver.es.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "build": "rollup -c",
+    "prepublish": "npm run test && npm run build"
   },
   "repository": {
     "type": "git",
