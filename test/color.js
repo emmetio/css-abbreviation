@@ -1,16 +1,17 @@
 'use strict';
 
 const assert = require('assert');
+const StreamReader = require('@emmetio/stream-reader');
 require('babel-register');
-const Color = require('../lib/color').default;
-const color = (hex, alpha) => new Color(hex, alpha);
+const parseColor = require('../lib/color').default;
+const color = abbr => parseColor(new StreamReader(abbr));
 
 describe('Color value', () => {
     it('create', () => {
         assert.equal(color('#0'), '#000000');
         assert.equal(color('#123'), '#112233');
         assert.equal(color('#ffcc00'), '#ffcc00');
-        assert.equal(color('#ffcc00', 0.5), 'rgba(255, 204, 0, 0.5)');
+        assert.equal(color('#fc0.5'), 'rgba(255, 204, 0, 0.5)');
     });
 
     it('convert to hex', () => {
@@ -22,6 +23,6 @@ describe('Color value', () => {
 
     it('convert to RGB', () => {
         assert.equal(color('#123').toRGB(), 'rgb(17, 34, 51)');
-        assert.equal(color('#123', 0.3).toRGB(), 'rgba(17, 34, 51, 0.3)');
+        assert.equal(color('#123.3').toRGB(), 'rgba(17, 34, 51, 0.3)');
     });
 });
