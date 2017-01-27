@@ -2,14 +2,18 @@
 
 import Node from '@emmetio/node';
 import StreamReader from '@emmetio/stream-reader';
-import consumeValue from './lib/css-value';
+import CSSValue from './lib/css-value';
+import consumeColor from './lib/color';
+import consumeNumericValue from './lib/numeric-value';
+import consumeKeyword from './lib/keyword';
 import consumeArguments from './lib/arguments';
 import { eatWhile, isAlphaWord } from './lib/utils';
 
-const EXCL       = 33; // #
-const DOLLAR     = 36; // $
-const PLUS       = 43; // +
-const AT         = 64; // @
+const EXCL   = 33; // #
+const DOLLAR = 36; // $
+const PLUS   = 43; // +
+const DASH   = 45; // -
+const AT     = 64; // @
 
 /**
  * Parses given Emmet CSS abbreviation and returns it as parsed Node tree
@@ -65,6 +69,36 @@ function consumeIdent(stream) {
     return eatWhile(stream, isIdent) ? stream.current() : null;
 }
 
+/**
+ * Consumes embedded value from Emmet CSS abbreviation stream
+ * @param  {StreamReader} stream
+ * @return {CSSValue}
+ */
+function consumeValue(stream) {
+    const values = new CSSValue();
+    let value;
+
+    while (!stream.eol()) {
+        if (value = consumeNumericValue(stream) || consumeColor(stream)) {
+            // edge case: a dash after unit-less numeric value or color should
+            // be treated as value separator, not negative sign
+            if (!value.unit) {
+                stream.eat(DASH);
+            }
+        } else {
+            stream.eat(DASH);
+            value = consumeKeyword(stream);
+        }
+
+        if (!value) {
+			break;
+        }
+
+		values.add(value);
+    }
+
+    return values;
+}
 
 /**
  * @param  {Number}  code
