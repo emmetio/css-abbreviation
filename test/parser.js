@@ -62,8 +62,31 @@ describe('CSS Abbreviation parser', () => {
     });
 
     it('arguments', () => {
-        assert.equal(parse('lg(top, red, blue 10%)'), 'lg(0 => top, 1 => red, 2 => blue 10%);');
-        assert.equal(parse('lg(top, "red, black", rgb(0, 0, 0) 10%)'), 'lg(0 => top, 1 => "red, black", 2 => rgb(0, 0, 0) 10%);');
+		const g = parser('lg(top, "red, black", rgb(0, 0, 0) 10%)').firstChild;
+		assert.equal(g.name, 'lg');
+		assert.equal(g.attributes.length, 3);
+
+		let attr = g.attributes[0];
+		assert.equal(attr.name, '0');
+		assert.equal(attr.value.size, 1);
+		assert.equal(attr.value.value[0].type, 'keyword');
+		assert.equal(attr.value.value[0].value, 'top');
+
+		attr = g.attributes[1];
+		assert.equal(attr.name, '1');
+		assert.equal(attr.value.size, 1);
+		assert.equal(attr.value.value[0].type, 'string');
+		assert.equal(attr.value.value[0].value, '"red, black"');
+
+		attr = g.attributes[2];
+		assert.equal(attr.name, '2');
+		assert.equal(attr.value.size, 2);
+		assert.equal(attr.value.value[0].type, 'function');
+
+		const args = attr.value.value[0].args;
+		assert.equal(args.length, 3);
+		assert.equal(args[0].value[0].type, 'numeric');
+		assert.equal(args[0].value[0].value, 0);
     });
 
     it('important/exclamation', () => {

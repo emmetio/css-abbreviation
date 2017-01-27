@@ -35,7 +35,7 @@ export default function(abbr) {
             // but since Emmet can support only one anonymous, `null`-name
             // attribute (for good reasons), we’ll use argument index as name
             for (let i = 0; i < args.length; i++) {
-                node.setAttribute(String(i), args[i].trim());
+                node.setAttribute(String(i), args[i]);
             }
         }
 
@@ -87,7 +87,7 @@ function consumeValue(stream) {
             }
         } else {
             stream.eat(DASH);
-            value = consumeKeyword(stream);
+            value = consumeKeyword(stream, true);
         }
 
         if (!value) {
