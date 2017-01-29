@@ -1,6 +1,6 @@
 {
   "name": "@emmetio/css-abbreviation",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Parses Emmet CSS abbreviatoin into AST tree",
   "main": "dist/css-abbreviation.cjs.js",
   "module": "dist/css-abbreviation.es.js",
