@@ -91,6 +91,7 @@ describe('CSS Abbreviation parser', () => {
 
     it('important/exclamation', () => {
         assert.equal(parse('!'), '!;');
+        assert.equal(parse('p!'), 'p: !;');
         assert.equal(parse('p10!'), 'p: 10 !;');
     });
 

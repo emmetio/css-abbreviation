@@ -9,7 +9,7 @@ import consumeKeyword from './lib/keyword';
 import consumeArguments from './lib/arguments';
 import { eatWhile, isAlphaWord } from './lib/utils';
 
-const EXCL   = 33; // #
+const EXCL   = 33; // !
 const DOLLAR = 36; // $
 const PLUS   = 43; // +
 const DASH   = 45; // -
@@ -66,7 +66,9 @@ export default function(abbr) {
  */
 function consumeIdent(stream) {
     stream.start = stream.pos;
-    return eatWhile(stream, isIdent) ? stream.current() : null;
+	eatWhile(stream, isIdentPrefix);
+	eatWhile(stream, isIdent);
+    return stream.start !== stream.pos ? stream.current() : null;
 }
 
 /**
@@ -105,5 +107,13 @@ function consumeValue(stream) {
  * @return {Boolean}
  */
 function isIdent(code) {
-    return code === AT || code === DOLLAR || code === EXCL || isAlphaWord(code);
+    return isAlphaWord(code);
+}
+
+/**
+ * @param  {Number}  code
+ * @return {Boolean}
+ */
+function isIdentPrefix(code) {
+	return code === AT || code === DOLLAR || code === EXCL;
 }
