@@ -102,4 +102,10 @@ describe('CSS Abbreviation parser', () => {
 		assert.equal(parse('p0+m0'), 'p: 0;m: 0;')
 		assert.equal(parse('p0!+m0!'), 'p: 0 !;m: 0 !;')
 	});
+
+	it('embedded variables', () => {
+		assert.equal(parse('foo$bar'), 'foo: $bar;');
+		assert.equal(parse('foo$bar-2'), 'foo: $bar-2;');
+		assert.equal(parse('foo$bar@bam'), 'foo: $bar @bam;');
+	});
 });
