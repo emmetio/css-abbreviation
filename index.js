@@ -13,6 +13,7 @@ const EXCL   = 33; // !
 const DOLLAR = 36; // $
 const PLUS   = 43; // +
 const DASH   = 45; // -
+const COLON  = 58; // :
 const AT     = 64; // @
 
 /**
@@ -81,6 +82,8 @@ function consumeValue(stream) {
 	let value;
 
 	while (!stream.eof()) {
+		// use colon as value separator
+		stream.eat(COLON);
 		if (value = consumeNumericValue(stream) || consumeColor(stream)) {
 			// edge case: a dash after unit-less numeric value or color should
 			// be treated as value separator, not negative sign

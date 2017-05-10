@@ -55,6 +55,7 @@ describe('CSS Abbreviation parser', () => {
 	});
 
 	it('keywords', () => {
+		assert.equal(parse('m:a'), 'm: a;');
 		assert.equal(parse('m-a'), 'm: a;');
 		assert.equal(parse('m-abc'), 'm: abc;');
 		assert.equal(parse('m-a0'), 'm: a 0;');
