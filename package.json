@@ -28,8 +28,8 @@
   "devDependencies": {
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-register": "^6.26.0",
-    "mocha": "^5.0.1",
-    "rollup": "^0.56.2"
+    "mocha": "^5.0.5",
+    "rollup": "^0.57.1"
   },
   "directories": {
     "test": "test"

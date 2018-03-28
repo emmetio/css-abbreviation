@@ -40,6 +40,10 @@ describe('CSS Abbreviation parser', () => {
 		assert.equal(parse('p.1.2.3'), 'p: 0.1 0.2 0.3;');
 		assert.equal(parse('p.1-.2.3'), 'p: 0.1 0.2 0.3;');
 		assert.equal(parse('p.1--.2.3'), 'p: 0.1 -0.2 0.3;');
+
+		assert.equal(parse('10'), 'null: 10;');
+		assert.equal(parse('.1'), 'null: 0.1;');
+		assert.throws(() => parse('.foo'), /Unexpected character at char 1/);
 	});
 
 	it('color', () => {
