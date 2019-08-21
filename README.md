@@ -1,2 +1,3 @@
-# css-transform
-Prepares Emmet abbreviation for CSS output
+# Deprecated
+
+Moved to monorepo: https://github.com/emmetio/emmet/tree/master/packages/css-abbreviation
